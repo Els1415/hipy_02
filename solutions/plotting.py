@@ -9,12 +9,14 @@ def skew_box_plots(high_data, low_data, save_loc=False):
     writes to a save location instead of displaying.
     '''
     combined_data = [high_data, low_data]
-    plt.boxplot(combined_data)
+    boxplot = plt.boxplot(combined_data)
+    plt.ylabel('GC Skew')
+    plt.xticks([1,2], ['high', 'low'])
     if save_loc == False:
         plt.show()
     else:
         plt.savefig(save_loc)
-    return
+    return boxplot
     
 def number_true(dict_list, testing_key):
     '''
@@ -22,7 +24,7 @@ def number_true(dict_list, testing_key):
     dictionaries that have True as the value for a given
     key.
     '''
-    return len(filter(lambda i: i[testing_key], dict_list))
+    return len(list(filter(lambda i: i[testing_key], dict_list)))
 
 def bar_graph(high_data, low_data, categories):
     '''
@@ -33,6 +35,7 @@ def bar_graph(high_data, low_data, categories):
     '''
     high_values = []
     low_values = []
+    width = 0.2
     for category in categories:
         high_values.append(float(number_true(high_data, category))
                            /len(high_data))
@@ -40,12 +43,13 @@ def bar_graph(high_data, low_data, categories):
                           /len(low_data))
     ind = np.arange(len(categories))
     fig, ax = plt.subplots()
-    high_rects = ax.bar(ind, high_values, 0.35, color='r')
-    low_rects = ax.bar(ind+0.35, low_values, 0.35, color='g')
-    labels = [categories[i/2] if i%2 else "" for i in xrange(6)]
-    ax.set_xticklabels(labels)
-    plt.show()
-    return
+    high_rects = ax.bar(ind, high_values, 0.2, color='r')
+    low_rects = ax.bar(ind+width, low_values, 0.2, color='g')
+    ax.set_xticks(ind+width)
+    ax.set_xticklabels((motifs))
+    ax.legend((high_rects[0], low_rects[0]), ('High', 'Low'))
+    ax.set_ylabel('Fraction of proteins that include motif')
+    return ax
 
 
 with open("high.fasta", "r") as high_genes:
@@ -54,8 +58,9 @@ with open("high.fasta", "r") as high_genes:
 with open("low.fasta", "r") as low_genes:
     low_info = geneanalyse.read_genes(low_genes)
 
-skew_box_plots([i["gc_skew"] for i in high_info],
+boxPlot = skew_box_plots([i["gc_skew"] for i in high_info],
                [i["gc_skew"] for i in low_info],
                save_loc="testing.png")
 motifs = ["tata_box", "ecor1", "cat_box"]
-bar_graph(high_info, low_info, motifs)
+barGraph = bar_graph(high_info, low_info, motifs)
+plt.show()
