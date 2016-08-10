@@ -1,0 +1,18 @@
+This task relies upon mastering the handling of strings in python, this tutorial
+( http://www.learnpython.org/en/Basic_String_Operations ) provides a comprehensive
+introduction to the topic. 
+
+Of particular interest to the first function, look at the "split()" method, and how it is used.
+
+Fasta files are widely used in biological science, a full description of them can be found
+on the wikipedia page. ( https://en.wikipedia.org/wiki/FASTA_format ). In reality they can 
+contain huge numbers of records, so it is important for a parser to only read one record at
+a time, otherwise it would be possible to run out of memory.
+
+This can be done by using python's built in generator mode, using the yield keyword instead of 
+returning a single object like most functions, a description of how generators work can be found
+here ( https://wiki.python.org/moin/Generators ).
+
+The sequence should be a single string, this means you will need to STRIP() the endline characters
+and spaces from the end of each line, and then JOIN() the lines together into one string when you
+have reached the end of the record.
