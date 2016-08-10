@@ -1,0 +1,5 @@
+This task uses many of the same string handling techniques as the above task.
+Make sure you understand the usage of dictionaries, lists and floats, all of
+which are explained in the python documentation.
+
+( https://docs.python.org/2/library/stdtypes.html )

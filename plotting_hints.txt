@@ -1,0 +1,10 @@
+For this task you will want to make use of matplotlib, the same as last week.
+
+The syntax for creating boxplots can be found here. 
+( http://matplotlib.org/examples/pylab_examples/boxplot_demo.html )
+
+And the procedure for generating a bargraph can be found here.
+( http://matplotlib.org/examples/api/barchart_demo.html )
+
+In terms of counting the number of True entries, you may want to look at the 
+built in python filter() and len() functions.
